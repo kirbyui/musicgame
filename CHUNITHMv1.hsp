@@ -1,0 +1,71 @@
+screen 0,800,600
+gosub *変数初期化
+repeat
+	title ""+time+":"+flag
+	gosub *処理
+	gosub *描画
+	time+=1
+	await 10
+loop
+
+*変数初期化
+	maxset=20//画面内の最大配置数
+	time=0.0
+	dim stagex, maxset
+	dim stagey, maxset
+	dim score, 4,4
+	
+	score.0.0=0//種類
+	score.0.1=0//場所x
+	score.0.2=0//出現時間
+	score.0.3=0//出現済みかどうか
+	
+	score.1.1=1//場所x
+	score.1.2=100//出現時間
+	score.2.1=2//場所x
+	score.2.2=200//出現時間
+	score.3.1=3//場所x
+	score.3.2=300//出現時間
+	
+	stage.0=0//種類
+	stagex.0=0
+	stagey.0=1
+	stagexx.0=0;初期x配置場所
+	return
+
+*処理
+	//時間になったら配置
+	foreach score
+		cnt1=cnt
+		if score.cnt.3=1:continue
+		if score.cnt.2<=time{
+			flag+=1
+			score.cnt.3=1
+			repeat 20
+				if stagey.cnt!=0:continue
+				stagey.cnt=20
+				stagex.cnt=score.cnt1.1
+			loop
+		}
+	loop
+	
+	//描画のための座標変更等
+	repeat maxset
+		if stagey.cnt=0:continue
+		stagey.cnt+=2
+		if stagey.cnt>=480:stagex.cnt=0:stagey.cnt=0
+	loop
+	return
+	
+*描画
+	//描画
+	redraw 0
+	color 255, 255, 255:boxf:color
+	repeat maxset
+		if stagey.cnt=0:continue
+		pos stagex.cnt*20+100, stagey.cnt
+		mes "<>"
+	loop
+	redraw 1
+	return
+
